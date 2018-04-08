@@ -8,11 +8,6 @@ import java.lang.annotation.Target;
 
 import org.springframework.core.annotation.AliasFor;
 
-/**
- * @author fuwei.deng
- * @date 2017年6月14日 下午3:10:36
- * @version 1.0.0
- */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited

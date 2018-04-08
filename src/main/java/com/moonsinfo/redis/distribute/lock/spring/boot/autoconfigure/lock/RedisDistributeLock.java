@@ -16,11 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @author fuwei.deng
- * @date 2017年6月14日 下午3:11:14
- * @version 1.0.0
- */
 public class RedisDistributeLock extends AbstractDistributeLock {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -32,8 +27,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 
     static {
         StringBuffer stringBuffer = new StringBuffer();
-	    stringBuffer.append("if redis.call(\"get\", KEYS[1]) == ARGV[1] ");
-	    stringBuffer.append("then ");
+	    stringBuffer.append("if redis.call(\"get\", KEYS[1]) == ARGV[1] then ");
 	    stringBuffer.append("    return redis.call(\"del\", KEYS[1]) ");
 	    stringBuffer.append("else ");
 	    stringBuffer.append("    return 0 ");

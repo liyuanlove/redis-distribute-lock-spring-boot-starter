@@ -1,10 +1,5 @@
 package com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock;
 
-/**
- * @author fuwei.deng
- * @date 2017年6月14日 下午3:10:57
- * @version 1.0.0
- */
 public abstract class AbstractDistributeLock implements DistributeLock {
 
 	public static final Long TIMEOUT_MILLIS = 30 * 1000L;

@@ -17,15 +17,12 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
-
 @Aspect
-@Configuration
-@ConditionalOnClass(DistributeLock.class)
-@AutoConfigureAfter(RedisDistributeLockAutoConfiguration.class)
 public class RedisDistributeLockAspectConfiguration {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
