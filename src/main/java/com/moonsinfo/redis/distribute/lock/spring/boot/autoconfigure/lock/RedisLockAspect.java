@@ -1,7 +1,5 @@
-package com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure;
+package com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock;
 
-import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.RedisLock;
-import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.DistributeLock;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,21 +7,17 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
 
 @Aspect
-public class RedisDistributeLockAspectConfiguration {
+public class RedisLockAspect {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
