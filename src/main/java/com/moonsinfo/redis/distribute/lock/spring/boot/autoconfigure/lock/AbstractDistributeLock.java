@@ -12,22 +12,22 @@ public abstract class AbstractDistributeLock implements DistributeLock {
 	}
 
 	@Override
-	public boolean lock(String key, int retryTimes) {
+	public boolean lock(String key, Integer retryTimes) {
 		return lock(key, TIMEOUT_MILLIS, retryTimes, SLEEP_MILLIS);
 	}
 
 	@Override
-	public boolean lock(String key, int retryTimes, long sleepMillis) {
+	public boolean lock(String key, Integer retryTimes, Long sleepMillis) {
 		return lock(key, TIMEOUT_MILLIS, retryTimes, sleepMillis);
 	}
 
 	@Override
-	public boolean lock(String key, long expire) {
+	public boolean lock(String key, Long expire) {
 		return lock(key, expire, RETRY_TIMES, SLEEP_MILLIS);
 	}
 
 	@Override
-	public boolean lock(String key, long expire, int retryTimes) {
+	public boolean lock(String key, Long expire, Integer retryTimes) {
 		return lock(key, expire, retryTimes, SLEEP_MILLIS);
 	}
 

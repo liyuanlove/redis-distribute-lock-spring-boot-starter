@@ -39,7 +39,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 	}
 
 	@Override
-	public boolean lock(String key, long expire, int retryTimes, long sleepMillis) {
+	public boolean lock(String key, Long expire, Integer retryTimes, Long sleepMillis) {
 		boolean result = setRedis(key, expire);
 		// 如果获取锁失败，按照传入的重试次数进行重试
 		while((!result) && retryTimes-- > 0){
@@ -54,7 +54,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 		return result;
 	}
 	
-	private boolean setRedis(String key, long expire) {
+	private boolean setRedis(String key, Long expire) {
 		try {
 			String result = stringRedisTemplate.execute(new RedisCallback<String>() {
 				@Override
@@ -78,6 +78,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 		try {
 			List<String> keys = new ArrayList<String>();
 			keys.add(key);
+
 			List<String> args = new ArrayList<String>();
 			args.add(lockFlag.get());
 

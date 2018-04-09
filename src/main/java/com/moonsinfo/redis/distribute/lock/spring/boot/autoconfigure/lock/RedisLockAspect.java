@@ -29,19 +29,19 @@ public class RedisLockAspect {
 	@Pointcut("@annotation(com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.RedisLock)")
 	private void lockPoint(){
 	}
-	
-	@Around("lockPoint()")
-	public Object around(ProceedingJoinPoint pjp) throws Throwable{
 
-		Method method = ((MethodSignature) pjp.getSignature()).getMethod();
-		RedisLock lockAction = method.getAnnotation(RedisLock.class);
-		String key = lockAction.value();
-		Object[] args = pjp.getArgs();
+	@Around("lockPoint()")
+	public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+
+		Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
+		RedisLock redisLock = method.getAnnotation(RedisLock.class);
+		String key = redisLock.value();
+		Object[] args = proceedingJoinPoint.getArgs();
 		key = parse(key, method, args);
 		
 		
-		int retryTimes = lockAction.action().equals(RedisLock.LockFailAction.CONTINUE) ? lockAction.retryTimes() : 0;
-		boolean lock = distributeLock.lock(key, lockAction.keepMills(), retryTimes, lockAction.sleepMills());
+		int retryTimes = redisLock.action().equals(RedisLock.LockFailAction.CONTINUE) ? redisLock.retryTimes() : 0;
+		boolean lock = distributeLock.lock(key, redisLock.keepMills(), retryTimes, redisLock.sleepMills());
 		if(!lock) {
 			logger.debug("get lock failed : " + key);
 			return null;
@@ -50,7 +50,7 @@ public class RedisLockAspect {
 		//得到锁,执行方法，释放锁
 		logger.debug("get lock success : " + key);
 		try {
-			return pjp.proceed();
+			return proceedingJoinPoint.proceed();
 		} catch (Exception e) {
 			logger.error("execute locked method occured an exception", e);
 		} finally {
@@ -72,6 +72,7 @@ public class RedisLockAspect {
 	 * @return
 	 */
 	private String parse(String key, Method method, Object[] args) {
+
 		String[] params = discoverer.getParameterNames(method);
 		EvaluationContext context = new StandardEvaluationContext();
 		for (int i = 0; i < params.length; i ++) {
