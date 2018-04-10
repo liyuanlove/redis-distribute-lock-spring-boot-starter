@@ -78,7 +78,7 @@
     <logger name="org.springframework.core.env.SystemEnvironmentPropertySource" level="INFO"/>
     <logger name="org.springframework.core.io.support.PathMatchingResourcePatternResolver" level="INFO"/>
     <logger name="org.springframework.core.type.classreading.AnnotationAttributesReadingVisitor" level="INFO"/>
-    <logger name="org.springframework.data.redis.core.RedisConnectionUtils" level="DEBUG"/>
+    <logger name="org.springframework.data.redis.core.RedisConnectionUtils" level="INFO"/>
     <logger name="org.springframework.jdbc.core.JdbcTemplate" level="INFO"/>
     <logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="INFO"/>
     <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="INFO"/>

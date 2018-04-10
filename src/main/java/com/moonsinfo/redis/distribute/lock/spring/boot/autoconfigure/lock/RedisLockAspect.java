@@ -54,8 +54,7 @@ public class RedisLockAspect {
 		} catch (Exception e) {
 			logger.error("execute locked method occured an exception", e);
 		} finally {
-//			boolean releaseResult = distributeLock.releaseLock(key);
-			boolean releaseResult = false;
+			boolean releaseResult = distributeLock.releaseLock(key);
 			logger.debug("release lock : " + key + (releaseResult ? " success" : " failed"));
 		}
 		return null;

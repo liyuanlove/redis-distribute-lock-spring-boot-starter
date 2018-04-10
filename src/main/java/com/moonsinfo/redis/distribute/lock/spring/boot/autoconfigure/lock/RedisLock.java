@@ -25,12 +25,13 @@ public @interface RedisLock {
 	
 	/** 当获取失败时候动作*/
 	LockFailAction action() default LockFailAction.CONTINUE;
-	
-	public enum LockFailAction{
+
+
+	enum LockFailAction{
         /** 放弃 */
         GIVEUP,
         /** 继续 */
-        CONTINUE;
+        CONTINUE
     }
 	
 	/** 重试的间隔时间,设置GIVEUP忽略此项*/

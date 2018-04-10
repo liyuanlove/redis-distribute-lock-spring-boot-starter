@@ -40,6 +40,12 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 
 	@Override
 	public boolean lock(String key, Long expire, Integer retryTimes, Long sleepMillis) {
+
+    	if (lockFlag.get() != null) {
+		    logger.error("lockFlag.get()1: " + lockFlag.get());
+	    }
+
+
 		boolean result = setRedis(key, expire);
 		// 如果获取锁失败，按照传入的重试次数进行重试
 		while((!result) && retryTimes-- > 0){
@@ -74,6 +80,8 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 	
 	@Override
 	public boolean releaseLock(String key) {
+
+		logger.warn("lockFlag.get()2: " + lockFlag.get());
 		// 释放锁的时候，有可能因为持锁之后方法执行时间大于锁的有效期，此时有可能已经被另外一个线程持有锁，所以不能直接删除
 		try {
 			List<String> keys = new ArrayList<String>();
@@ -101,6 +109,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 					return 0L;
 				}
 			});
+			logger.warn("lockFlag.get()3: " + lockFlag.get());
 			
 			return result != null && result > 0;
 		} catch (Exception e) {
