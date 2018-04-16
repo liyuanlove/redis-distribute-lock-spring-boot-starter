@@ -35,9 +35,6 @@ public class RedisDistributeLock extends AbstractDistributeLock {
         UNLOCK_LUA = stringBuffer.toString();
     }
 
-	public RedisDistributeLock() {
-	}
-
 	@Override
 	public boolean lock(String key, Long expire, Integer retryTimes, Long sleepMillis) {
 
