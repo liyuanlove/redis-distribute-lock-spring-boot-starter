@@ -42,12 +42,14 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 	public boolean lock(String key, Long expire, Integer retryTimes, Long sleepMillis) {
 
 		boolean result = setRedis(key, expire);
+
 		// 如果获取锁失败，按照传入的重试次数进行重试
-		while((!result) && retryTimes-- > 0){
+		while(!result && retryTimes-- > 0) {
 			try {
 				logger.debug("lock failed, retrying..." + retryTimes);
 				Thread.sleep(sleepMillis);
 			} catch (InterruptedException e) {
+				logger.warn("lock occur an exception.", e);
 				return false;
 			}
 			result = setRedis(key, expire);
@@ -68,7 +70,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 			});
 			return !StringUtils.isEmpty(result);
 		} catch (Exception e) {
-			logger.error("set redis occured an exception", e);
+			logger.error("set redis occur an exception", e);
 		}
 		return false;
 	}
@@ -108,7 +110,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 
 			return result != null && result > 0;
 		} catch (Exception e) {
-			logger.error("release lock occured an exception", e);
+			logger.error("release lock occur an exception", e);
 		}
 		return false;
 	}
