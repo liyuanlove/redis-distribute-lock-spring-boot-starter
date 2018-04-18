@@ -43,7 +43,7 @@ public class RedisDistributeLock extends AbstractDistributeLock {
 		// 如果获取锁失败，按照传入的重试次数进行重试
 		while(!result && retryTimes-- > 0) {
 			try {
-				logger.debug("lock failed, retrying..." + retryTimes);
+				logger.debug("lock fail, retrying: " + retryTimes);
 				Thread.sleep(sleepMillis);
 			} catch (InterruptedException e) {
 				logger.warn("lock occur an exception.", e);

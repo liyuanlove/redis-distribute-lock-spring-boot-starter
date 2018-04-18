@@ -6,16 +6,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service
 public class RedisLockService {
 
 	private final Logger logger = LoggerFactory.getLogger(RedisLockService.class);
+	private int counter = 0;
 
-	@RedisLock
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	@RedisLock(key = "'redis:lock:user:id:'.concat(#user.id)", sleepMills = 10L, retryTimes = 10)
 	public void update(User user){
 		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
+			counter++;
+			System.err.println(counter);
+
+			Thread.sleep(20);
+		} catch (Exception e) {
 			logger.error("exp", e);
 		}
 	}

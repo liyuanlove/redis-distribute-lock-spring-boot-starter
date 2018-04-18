@@ -3,11 +3,11 @@ package com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock;
 public abstract class AbstractDistributeLock implements DistributeLock {
 
 	/** 未获取到锁时, 线程休眠时间 */
-	public static final Long SLEEP_MILLIS = 500L;
-	/** 锁的超时时间 */
+	public static final Long SLEEP_MILLIS = 100L;
+	/** 锁的超时时间, 默认30s, 根据执行时间按需调整 */
 	public static final Long EXPIRE_MILLIS = 30 * 1000L;
-	/** MAX_WAITE =  RETRY_TIMES * SLEEP_MILLIS = 10seconds */
-	public static final Integer RETRY_TIMES = 20;
+	/** MAX_WAITE =  RETRY_TIMES * SLEEP_MILLIS = 5seconds */
+	public static final Integer RETRY_TIMES = 50;
 
 	@Override
 	public boolean lock(String key) {

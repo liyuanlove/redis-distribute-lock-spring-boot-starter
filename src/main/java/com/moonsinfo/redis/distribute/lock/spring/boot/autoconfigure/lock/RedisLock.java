@@ -13,30 +13,15 @@ import org.springframework.core.annotation.AliasFor;
 @Inherited
 public @interface RedisLock {
 
-	/** 锁的资源，key。支持spring El表达式*/
-	@AliasFor("key")
-	String value() default "'default'";
-	
-	@AliasFor("value")
-	String key() default "'default'";
-	
-	/** 持锁时间,单位毫秒*/
-	long keepMills() default 30000;
-	
-	/** 当获取失败时候动作*/
-	LockFailAction action() default LockFailAction.CONTINUE;
+	/** 锁的资源key, 支持spring El表达式*/
+	String key() default "'redis:lock:default'";
 
-
-	enum LockFailAction{
-        /** 放弃 */
-        GIVEUP,
-        /** 继续 */
-        CONTINUE
-    }
+	/** 锁的超时时间, 默认30s, 根据执行时间按需调整 */
+	long keepMills() default 30 * 1000L;
 	
-	/** 重试的间隔时间,设置GIVEUP忽略此项*/
-    long sleepMills() default 200;
+	/** 重试的间隔时间 */
+    long sleepMills() default 100L;
     
     /** 重试次数*/
-    int retryTimes() default 5;
+    int retryTimes() default 50;
 }

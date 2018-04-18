@@ -35,27 +35,26 @@ public class RedisLockAspect {
 
 		Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
 		RedisLock redisLock = method.getAnnotation(RedisLock.class);
-		String key = redisLock.value();
+		String key = redisLock.key();
 		Object[] args = proceedingJoinPoint.getArgs();
 		key = parse(key, method, args);
 		
 		
-		int retryTimes = redisLock.action().equals(RedisLock.LockFailAction.CONTINUE) ? redisLock.retryTimes() : 0;
-		boolean lock = distributeLock.lock(key, redisLock.keepMills(), retryTimes, redisLock.sleepMills());
+		boolean lock = distributeLock.lock(key, redisLock.keepMills(), redisLock.retryTimes(), redisLock.sleepMills());
 		if(!lock) {
-			logger.debug("get lock failed : " + key);
+			logger.debug("get lock fail: " + key);
 			return null;
 		}
 		
 		//得到锁,执行方法，释放锁
-		logger.debug("get lock success : " + key);
+		logger.debug("get lock success: " + key);
 		try {
 			return proceedingJoinPoint.proceed();
 		} catch (Exception e) {
-			logger.error("execute locked method occured an exception", e);
+			logger.error("execute lock method occur an exception", e);
 		} finally {
-			boolean releaseResult = distributeLock.releaseLock(key);
-			logger.debug("release lock : " + key + (releaseResult ? " success" : " failed"));
+			boolean release = distributeLock.releaseLock(key);
+			logger.debug("release lock: " + key + (release? " success" : " fail"));
 		}
 		return null;
 	}

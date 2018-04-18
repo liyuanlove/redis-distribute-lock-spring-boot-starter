@@ -29,7 +29,7 @@ public class TestController {
 	@GetMapping({"", "/"})
 	public Object index(@RequestParam(defaultValue = "100") Integer id, @RequestParam(defaultValue = "iMiracle") String name) {
 
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < 50; i++){
 			new RedisLockThread().start();
 		}
 
@@ -40,6 +40,7 @@ public class TestController {
 	@GetMapping("aspect")
 	public Object index() {
 
+		redisLockService.setCounter(0);
 		for(int i = 0; i < 50; i++){
 			new RedisLockAspectThread().start();
 		}
@@ -52,18 +53,12 @@ public class TestController {
 	class RedisLockThread extends Thread {
 		@Override
 		public void run() {
-			String key = "lockKey";
+			String key = "redis:lock:key";
 			boolean result = distributeLock.lock(key);
-			result = distributeLock.lock(key);
-			result = distributeLock.lock(key);
-			result = distributeLock.lock(key);
-			result = distributeLock.lock(key);
-			result = distributeLock.lock(key);
-
-
 			logger.info(result ? "get lock success : " + key : "get lock failed : " + key);
+
 			try {
-				Thread.sleep(2);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				logger.error("exp", e);
 			} finally {

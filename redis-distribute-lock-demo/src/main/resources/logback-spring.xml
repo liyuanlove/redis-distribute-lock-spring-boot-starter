@@ -110,6 +110,7 @@
 
 
     <logger name="com.github.mapper" level="INFO"/>
+    <logger name="com.moonsinfo" level="INFO"/>
 
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
