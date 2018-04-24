@@ -25,6 +25,7 @@
     <logger name="org.thymeleaf.TemplateEngine.CONFIG" level="INFO"/>
     <logger name="org.thymeleaf.TemplateEngine.TIMER" level="INFO"/>
     <logger name="org.springframework.boot.autoconfigure" level="DEBUG"/>
+    <logger name="org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer" level="INFO"/>
     <logger name="org.springframework.boot.bind" level="INFO"/>
     <logger name="org.springframework.boot.context" level="INFO"/>
     <logger name="org.springframework.boot.web.filter" level="INFO"/>

@@ -18,13 +18,13 @@ public class RedisLockService {
 		this.counter = counter;
 	}
 
-	@RedisLock(key = "'redis:lock:user:id:'.concat(#user.id)", sleepMills = 10L, retryTimes = 10)
+	@RedisLock(key = "'redis:lock:user:id:'.concat(#user.id)", sleepMills = 10L, retryTimes = 100)
 	public void update(User user){
 		try {
 			counter++;
 			System.err.println(counter);
 
-			Thread.sleep(20);
+//			Thread.sleep(2);
 		} catch (Exception e) {
 			logger.error("exp", e);
 		}

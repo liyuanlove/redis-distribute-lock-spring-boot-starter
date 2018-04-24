@@ -7,6 +7,7 @@ import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.RedisD
 import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.RedisLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class TestController {
 
 	@Resource private DistributeLock distributeLock;
 	@Resource private RedisLockService redisLockService;
+	@Resource private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@ResponseBody
@@ -41,8 +43,9 @@ public class TestController {
 	public Object index() {
 
 		redisLockService.setCounter(0);
-		for(int i = 0; i < 50; i++){
-			new RedisLockAspectThread().start();
+		for(int i = 0; i < 5000; i++){
+//			new RedisLockAspectThread().start();
+			threadPoolTaskExecutor.execute(new RedisLockAspectThread());
 		}
 
 
