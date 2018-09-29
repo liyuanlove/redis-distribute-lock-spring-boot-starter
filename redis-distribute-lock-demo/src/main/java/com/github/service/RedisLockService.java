@@ -29,5 +29,17 @@ public class RedisLockService {
 			logger.error("exp", e);
 		}
 	}
+
+	@RedisLock
+	public void update1(User user){
+		try {
+			counter++;
+			System.err.println(counter);
+
+//			Thread.sleep(2);
+		} catch (Exception e) {
+			logger.error("exp", e);
+		}
+	}
 	
 }

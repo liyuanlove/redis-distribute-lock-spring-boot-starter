@@ -14,7 +14,11 @@ import org.springframework.core.annotation.AliasFor;
 public @interface RedisLock {
 
 	/** 锁的资源key, 支持spring El表达式*/
+	@AliasFor("value")
 	String key() default "'redis:lock:default'";
+
+	@AliasFor("key")
+	String value() default "'redis:lock:default'";
 
 	/** 锁的超时时间, 默认30s, 根据执行时间按需调整 */
 	long keepMills() default 30 * 1000L;

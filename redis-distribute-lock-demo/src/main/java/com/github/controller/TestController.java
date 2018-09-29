@@ -39,6 +39,15 @@ public class TestController {
 	}
 
 	@ResponseBody
+	@GetMapping("t")
+	public Object t(@RequestParam(defaultValue = "100") Integer id, @RequestParam(defaultValue = "iMiracle") String name) {
+
+		redisLockService.update(new User(id, name));
+
+		return "success";
+	}
+
+	@ResponseBody
 	@GetMapping("aspect")
 	public Object index() {
 
