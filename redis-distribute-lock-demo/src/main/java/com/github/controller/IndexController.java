@@ -3,8 +3,6 @@ package com.github.controller;
 import com.github.model.User;
 import com.github.service.RedisLockService;
 import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.DistributeLock;
-import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.RedisDistributeLock;
-import com.moonsinfo.redis.distribute.lock.spring.boot.autoconfigure.lock.RedisLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -15,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.management.relation.RelationService;
 
 
 @Controller
-@RequestMapping("t")
-public class TestController {
+@RequestMapping
+public class IndexController {
 
 	@Resource private DistributeLock distributeLock;
 	@Resource private RedisLockService redisLockService;
