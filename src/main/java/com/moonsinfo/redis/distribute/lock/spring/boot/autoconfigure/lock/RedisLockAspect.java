@@ -61,6 +61,7 @@ public class RedisLockAspect {
 			boolean release = distributeLock.releaseLock(key);
 			logger.debug("release lock: " + key + (release? " success" : " fail"));
 			Assert.isTrue(release, "release lock error.");
+			// todo... 这里需要业务回退, 不严谨, 释放失败原因: 1网络 2锁过期
 		}
 		return null;
 	}
