@@ -36,6 +36,10 @@ public class RedisLockAspect {
 		Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
 		RedisLock redisLock = method.getAnnotation(RedisLock.class);
 		String key = redisLock.key();
+		if (DistributeLock.DEFAULT_LOCK_KEY.equals(key)) {
+			logger.warn("redis distribute lock KEY is not specified, use default key: " + key);
+		}
+
 		Object[] args = proceedingJoinPoint.getArgs();
 		key = parse(key, method, args);
 		
