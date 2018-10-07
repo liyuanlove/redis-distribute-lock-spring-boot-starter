@@ -19,11 +19,11 @@ public class Application {
 
 		ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
 		// 核心线程数
-		threadPoolTaskExecutor.setCorePoolSize(8);
+		threadPoolTaskExecutor.setCorePoolSize(64);
 		// 最大线程数
-		threadPoolTaskExecutor.setMaxPoolSize(32);
+		threadPoolTaskExecutor.setMaxPoolSize(128);
 		// 运行线程满时，等待队列的大小
-		threadPoolTaskExecutor.setQueueCapacity(64);
+		threadPoolTaskExecutor.setQueueCapacity(512);
 		// 池和队列满的策略, 调用者的线程会执行该任务, 如果执行器已关闭, 则丢弃
 		threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 		// 是否允许释放核心线程

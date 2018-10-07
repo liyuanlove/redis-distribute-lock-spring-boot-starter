@@ -26,7 +26,7 @@ public class IndexController {
 
 	@ResponseBody
 	@GetMapping({"", "/"})
-	public Object index(@RequestParam(defaultValue = "100") Integer id, @RequestParam(defaultValue = "iMiracle") String name) {
+	public Object index() {
 
 		for(int i = 0; i < 50; i++){
 			new RedisLockThread().start();
@@ -39,21 +39,19 @@ public class IndexController {
 	@GetMapping("t")
 	public Object t(@RequestParam(defaultValue = "100") Integer id, @RequestParam(defaultValue = "iMiracle") String name) {
 
-		redisLockService.update(new User(id, name));
+		redisLockService.update1(new User(id, name));
 
 		return "success";
 	}
 
 	@ResponseBody
 	@GetMapping("aspect")
-	public Object index() {
+	public Object aspect() {
 
 		redisLockService.setCounter(0);
 		for(int i = 0; i < 5000; i++){
-//			new RedisLockAspectThread().start();
 			threadPoolTaskExecutor.execute(new RedisLockAspectThread());
 		}
-
 
 		return "success";
 	}

@@ -18,6 +18,8 @@
     <logger name="java" level="INFO"/>
     <logger name="javax" level="INFO"/>
     <logger name="com.sun" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+    <logger name="io.lettuce" level="INFO"/>
     <logger name="org.apache.tomcat" level="INFO"/>
     <logger name="org.apache.coyote" level="INFO"/>
     <logger name="org.apache.catalina" level="INFO"/>

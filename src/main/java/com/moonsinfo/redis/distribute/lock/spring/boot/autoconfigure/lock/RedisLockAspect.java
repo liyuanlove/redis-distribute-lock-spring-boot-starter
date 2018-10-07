@@ -12,6 +12,7 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
@@ -36,21 +37,21 @@ public class RedisLockAspect {
 		Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
 		RedisLock redisLock = method.getAnnotation(RedisLock.class);
 		String key = redisLock.key();
+
+		Object[] args = proceedingJoinPoint.getArgs();
+		key = parse(key, method, args);
+
 		if (DistributeLock.DEFAULT_LOCK_KEY.equals(key)) {
 			logger.warn("redis distribute lock KEY is not specified, use default key: " + key);
 		}
 
-		Object[] args = proceedingJoinPoint.getArgs();
-		key = parse(key, method, args);
-		
-		
 		boolean lock = distributeLock.lock(key, redisLock.keepMills(), redisLock.retryTimes(), redisLock.sleepMills());
 		if(!lock) {
 			logger.debug("get lock fail: " + key);
 			return null;
 		}
 		
-		//得到锁,执行方法，释放锁
+		// 得到锁, 执行方法, 释放锁
 		logger.debug("get lock success: " + key);
 		try {
 			return proceedingJoinPoint.proceed();
@@ -59,15 +60,13 @@ public class RedisLockAspect {
 		} finally {
 			boolean release = distributeLock.releaseLock(key);
 			logger.debug("release lock: " + key + (release? " success" : " fail"));
+			Assert.isTrue(release, "release lock error.");
 		}
 		return null;
 	}
 	
 	/**
 	 * @description 解析spring EL表达式
-	 * @author fuwei.deng
-	 * @date 2018年1月9日 上午10:41:01
-	 * @version 1.0.0
 	 * @param key 表达式
 	 * @param method 方法
 	 * @param args 方法参数
