@@ -12,6 +12,7 @@
     <description>redis-distribute-lock-spring-boot-starter</description>
     <url>https://github.com/iTriumph/redis-distribute-lock-spring-boot-starter</url>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
